@@ -1,0 +1,73 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:ListViewsNEW"
+             xmlns:converters="clr-namespace:ListViewsNEW.Converters"
+             xmlns:bevhaviors="clr-namespace:ListViewsNEW.Behaviors"
+             x:Class="ListViewsNEW.MainPage">
+   
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <converters:DoubleToIntConverter
+                x:Key="doubletointegerConverter" />
+            <converters:SelectedItemEventArgsToSelectedItemConverter
+                x:Key="SelectedItemConverter" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <StackLayout Padding="20">
+        <ListView ItemsSource="{Binding People}"
+                  HasUnevenRows="True">
+            <ListView.Behaviors>
+                <bevhaviors:EventToCommandBehavior EventName="ItemSelected"
+                                                   Command="{Binding ItemSelectedCommand}"
+                                                   Converter="{StaticResource SelectedItemConverter}" />
+
+            </ListView.Behaviors>
+            
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <!--
+                    <TextCell 
+                        Text="{Binding Name}"
+                        Detail="{Binding Age, 
+                        Converter={StaticResource doubletointegerConverter}}" />
+-->                    
+                    <ViewCell>
+                        <ContentView>
+                            <StackLayout Padding="20">
+                                <StackLayout Orientation="Horizontal">
+                                    <Label 
+                                        Text="{Binding FirstName}" 
+                                        FontSize="20" 
+                                        FontAttributes="Bold" />
+                                    <Label 
+                                        Text="{Binding LastName}" 
+                                        FontSize="20" 
+                                        FontAttributes="Bold" />
+                                </StackLayout>
+                                <Label Text="{Binding Address}" FontSize="15" />
+                            </StackLayout>
+                            
+                        </ContentView>
+                        
+                    </ViewCell>
+                    
+
+                    <!--
+                    <ImageCell 
+                        Text="{Binding Name}"
+                        Detail="{Binding Address}"
+                        ImageSource="{Binding ImageSource}"
+                        TextColor="Black"
+                        DetailColor="Gray"
+                        />
+                    -->
+                </DataTemplate>
+
+            </ListView.ItemTemplate>
+
+        </ListView>
+
+    </StackLayout>
+</ContentPage>
